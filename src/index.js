@@ -8,5 +8,5 @@ const client = new Client({
     IntentsBitField.Flags.MessageContent,
   ],
 });
-
+console.log("test");
 client.login(`${discord_token}`);

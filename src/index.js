@@ -1,5 +1,7 @@
+require("dotenv").config();
+
 const { Client, IntentsBitField } = require("discord.js");
-const discord_token = process.env.discord_token;
+const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
 const client = new Client({
   intents: [
     IntentsBitField.Flags.Guilds,
@@ -9,4 +11,12 @@ const client = new Client({
   ],
 });
 
-client.login(`${discord_token}`);
+client.on("ready", (c) => {
+  console.log(`${c.user.tag} is online.`);
+});
+
+client.on("messageCreate", (message) => {
+  console.log(message.content);
+});
+
+client.login(`${DISCORD_TOKEN}`);

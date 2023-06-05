@@ -1,7 +1,7 @@
 require("dotenv").config();
 
 const { Client, IntentsBitField } = require("discord.js");
-const DISCORD_TOKEN = process.env.DISCORD_TOKEN;
+const TOKEN = process.env.TOKEN;
 const client = new Client({
   intents: [
     IntentsBitField.Flags.Guilds,
@@ -15,8 +15,39 @@ client.on("ready", (c) => {
   console.log(`${c.user.tag} is online.`);
 });
 
-client.on("messageCreate", (message) => {
-  console.log(message.content);
+client.on("interactionCreate", (interaction) => {
+  if (!interaction.isChatInputCommand()) return;
+
+  if (interaction.commandName === "add") {
+    const num1 = interaction.options.get("first-number")?.value;
+    const num2 = interaction.options.get("second-number")?.value;
+
+    // interaction.reply(`The sum is ${num1 + num2}`);
+    console.log(num1);
+  }
+
+  // if (interaction.commandName === "hey") {
+  //   interaction.reply("Yo!");
+  // }
+
+  // if (interaction.commandName === "ping") {
+  //   interaction.reply("pong");
+  // }
+  // console.log(interaction);
 });
 
-client.login(`${DISCORD_TOKEN}`);
+client.on("messageCreate", (message) => {
+  if (message.author.bot) {
+    return;
+  }
+
+  if (message.content === "!rules") {
+    message.reply("Oh you want rules ?");
+  }
+
+  if (message.content === "!mod") {
+    message.reply("Fluuke Sama");
+  }
+});
+
+client.login(`${TOKEN}`);
